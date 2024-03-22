@@ -1,1 +1,24 @@
+#pip install pydub
+#pip install pyttsx3
+
+
+import pyttsx3
+from pydub import AudioSegment
+from pydub.playback import play
+
+def speak_text():
+    text = input("Enter text: ")
+
+    # Initialize text-to-speech engine
+    engine = pyttsx3.init()
+    engine.setProperty('rate', 150)  # Adjust the speed of speech
+    engine.save_to_file(text, 'spoken_text.wav')  # Save spoken text as an audio file
+    engine.runAndWait()
+
+    # Play the spoken text
+    audio = AudioSegment.from_wav('spoken_text.wav')
+    play(audio)
+
+if __name__ == "__main__":
+    speak_text()
 
