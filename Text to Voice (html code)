@@ -1,1 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text to Speech</title>
+</head>
+<body>
+    <h1>Text to Speech</h1>
+    <textarea cols="50" id="textToSpeak" placeholder="Enter text..." rows="4"></textarea><br />
+    <button onclick="speakText()">Speak</button>
+
+    <script>
+        function speakText() {
+            var text = document.getElementById('textToSpeak').value;
+            var speech = new SpeechSynthesisUtterance();
+
+            speech.lang = 'en-US'; // Set the language (optional)
+            speech.text = text;
+
+            speech.volume = 1; // 0 to 1
+            speech.rate = 1; // Speech rate: 0.1 to 10
+            speech.pitch = 1; // Speech pitch: 0 to 2
+
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
 
