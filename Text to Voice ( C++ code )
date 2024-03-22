@@ -1,0 +1,37 @@
+#include <iostream>
+#include <Windows.h>
+#include <fstream>
+
+void speakText(const std::wstring& text) {
+    CoInitialize(NULL);
+    ISpVoice* pVoice = NULL;
+
+    HRESULT hr = CoCreateInstance(CLSID_SpVoice, NULL, CLSCTX_ALL, IID_ISpVoice, (void **)&pVoice);
+    if (SUCCEEDED(hr)) {
+        pVoice->Speak(text.c_str(), 0, NULL);
+        pVoice->Release();
+        pVoice = NULL;
+    }
+    CoUninitialize();
+}
+
+int main() {
+    std::wstring text;
+    std::wcout << L"Enter text: ";
+    std::getline(std::wcin, text);
+
+    // Speak the text
+    speakText(text);
+
+    // Save spoken text to a file
+    std::wofstream outFile("spoken_text.txt");
+    if (outFile.is_open()) {
+        outFile << text;
+        outFile.close();
+        std::wcout << L"Spoken text saved to spoken_text.txt" << std::endl;
+    } else {
+        std::wcerr << L"Unable to save spoken text to file" << std::endl;
+    }
+
+    return 0;
+}
